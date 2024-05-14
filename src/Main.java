@@ -10,7 +10,6 @@ class MyTestingClass {
     // Custom hashCode method
     @Override
     public int hashCode() {
-        // Custom hash function for better distribution
         return id * 31;
     }
 
@@ -24,20 +23,18 @@ class MyTestingClass {
     }
 }
 
-//public class Main {
-//    public static void main(String[] args) {
-//        MyHashTable<MyTestingClass, String> table = new MyHashTable<>();
-//        Random random = new Random();
-//
-//
-//        for (int i = 0; i < 10000; i++) {
-//            MyTestingClass key = new MyTestingClass(random.nextInt(100));
-//            table.put(key, "Value " + i);
-//        }
-//
-//
-//        for (int i = 0; i < table.getCapacity(); i++) {
-//            System.out.println("Bucket " + i + ": " + table.get());
-//        }
-//    }
-//}
+public class Main {
+    public static void main(String[] args) {
+        MyHashTable<Integer , String> mht= new MyHashTable<>();
+        mht.put(1,"banana");
+        mht.put(2,"apple");
+        mht.put(3,"orange");
+        System.out.println(mht.get(2));
+
+
+
+
+
+
+    }
+}
