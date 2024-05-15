@@ -1,3 +1,5 @@
+package HashTable;
+
 import java.util.Objects;
 
 public class MyHashTable<K, V> {
@@ -22,6 +24,15 @@ public class MyHashTable<K, V> {
     private int M = 11;
     private int size;
     private int capacity;
+    public int getM(){
+        return this.M;
+    }
+    public int getSize(){
+        return this.size;
+    }
+    public int getCapacity(){
+        return this.capacity;
+    }
 
     public MyHashTable() {
         this.capacity = M;
@@ -39,21 +50,18 @@ public class MyHashTable<K, V> {
     }
 
     public void put(K key, V value) {
-        int index = hash(key);
-        HashNode<K, V> newNode = new HashNode<>(key, value);
-        if (chainArray[index] == null) {
-            chainArray[index] = newNode;
-        } else {
-            HashNode<K, V> current = chainArray[index];
-            while (current.next != null) {
-                if (current.key.equals(key)) {
-                    current.value = value;
-                    return;
-                }
-                current = current.next;
+        int hashVal = hash(key);
+        HashNode<K, V> node = chainArray[hashVal];
+        while (node != null) {
+            if (node.key.equals(key)) {
+                node.value = value;
+                return;
             }
-            current.next = newNode;
+            node = node.next;
         }
+        node = new HashNode<>(key, value);
+        node.next = chainArray[hashVal];
+        chainArray[hashVal] = node;
         size++;
     }
 
