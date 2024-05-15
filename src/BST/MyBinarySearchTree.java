@@ -16,14 +16,6 @@ public class MyBinarySearchTree<K extends Comparable<K>, V> {
             this.key=key;
             this.val=val;
         }
-
-        public K getKey() {
-            return key;
-        }
-
-        public V getVal() {
-            return val;
-        }
     }
     public MyBinarySearchTree() {
         root = null;
@@ -36,8 +28,9 @@ public class MyBinarySearchTree<K extends Comparable<K>, V> {
     }
 
     private Node put(Node node, K key, V val) {
-        int cmp = key.compareTo(node.key);
         if (node == null) return new Node(key, val);
+        int cmp = key.compareTo(node.key);
+
         if (cmp < 0) node.left = put(node.left, key, val);
         if (cmp > 0) node.right = put(node.right, key, val);
         else node.val=val;
@@ -49,8 +42,9 @@ public class MyBinarySearchTree<K extends Comparable<K>, V> {
     }
 
     private V get(Node node, K key){
-        int cmp =key.compareTo(node.key);
         if(node==null) return null;
+        int cmp =key.compareTo(node.key);
+
         if(cmp<0) return get(node.left, key);
         if(cmp>0) return get(node.right, key);
         else return node.val;
