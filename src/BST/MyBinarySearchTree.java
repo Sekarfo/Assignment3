@@ -85,34 +85,34 @@ public class MyBinarySearchTree<K extends Comparable<K>, V> implements Iterable<
 
     @Override
     public Iterator<Node> iterator() {
-        return new BSTIterator(root);
+        return new MyIterator(root);
     }
 
-    private class BSTIterator implements Iterator<Node> {
+    private class MyIterator implements Iterator<Node> {
         private Stack<Node> stack = new Stack<>();
-
-        public BSTIterator(Node root) {
-            pushLeft(root);
-        }
-
-        private void pushLeft(Node x) {
-            while (x != null) {
-                stack.push(x);
-                x = x.left;
-            }
-        }
-
         @Override
         public boolean hasNext() {
             return !stack.isEmpty();
         }
-
         @Override
         public Node next() {
             Node node = stack.pop();
             pushLeft(node.right);
             return node;
         }
+
+        private void pushLeft(Node node) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
+
+        public MyIterator(Node root) {
+            pushLeft(root);
+        }
+
+
         };
     }
 
