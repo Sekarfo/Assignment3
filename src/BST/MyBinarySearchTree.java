@@ -3,10 +3,10 @@ package BST;
 import java.util.Iterator;
 import java.util.Stack;
 
-public class MyBinarySearchTree<K extends Comparable<K>, V> {
+public class MyBinarySearchTree<K extends Comparable<K>, V> implements Iterable<MyBinarySearchTree<K, V>.Node> {
     private Node root ;
     private int size;
-    private class Node
+    public class Node
     {
 
         private K key;
@@ -15,6 +15,14 @@ public class MyBinarySearchTree<K extends Comparable<K>, V> {
         public Node(K key, V val){
             this.key=key;
             this.val=val;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public V getValue() {
+            return val;
         }
     }
     public MyBinarySearchTree() {
@@ -75,44 +83,38 @@ public class MyBinarySearchTree<K extends Comparable<K>, V> {
     }
 
 
-    public Iterable<K> iterator() {
-        return new Iterable<K>() {
-            @Override
-            public Iterator<K> iterator() {
-                return new Iterator<K>() {
-                    private Node current = root;
-                    private Node previous = null;
-                    private Stack<Node> stack = new Stack<>();
+    @Override
+    public Iterator<Node> iterator() {
+        return new BSTIterator(root);
+    }
 
-                    private void pushLeftChildren(Node node) {
-                        while (node != null) {
-                            stack.push(node);
-                            node = node.left;
-                        }
-                    }
+    private class BSTIterator implements Iterator<Node> {
+        private Stack<Node> stack = new Stack<>();
 
-                    {
-                        pushLeftChildren(current);
-                    }
+        public BSTIterator(Node root) {
+            pushLeft(root);
+        }
 
-                    @Override
-                    public boolean hasNext() {
-                        return !stack.isEmpty();
-                    }
-
-                    @Override
-                    public K next() {
-                        Node nextNode = stack.pop();
-                        K key = nextNode.key;
-                        pushLeftChildren(nextNode.right);
-                        return key;
-                    }
-                };
+        private void pushLeft(Node x) {
+            while (x != null) {
+                stack.push(x);
+                x = x.left;
             }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+
+        @Override
+        public Node next() {
+            Node node = stack.pop();
+            pushLeft(node.right);
+            return node;
+        }
         };
     }
 
 
-
-}
 
